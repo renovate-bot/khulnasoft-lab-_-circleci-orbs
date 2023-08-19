@@ -1,0 +1,8 @@
+description: |
+  Docker stable image with KHULNASOFT_VERSION environment variable set.
+
+environment:
+  KHULNASOFT_VERSION: v0.10.2
+
+docker:
+  - image: docker:stable-git

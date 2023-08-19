@@ -1,0 +1,21 @@
+description: Prints analysis report of package vulnerabilities using JQ.
+
+steps:
+  - run:
+      name: View parsed vulnerability analysis report.
+      command: |
+        if [[ ! $(which jq) ]]; then
+          (set +o pipefail; apk add jq || apt-get install -y jq || yum install -y jq)
+        fi
+        if ls khulnasoft-reports/*content-os*.json >/dev/null 2>&1; then
+          for f in khulnasoft-reports/*content-os*.json; do
+            printf "\n%s\n" "The following OS packages are installed in $f:"
+            jq '[.content | sort_by(.package) | .[] | {package: .package, version: .version}]' $f
+          done
+        fi
+        if ls khulnasoft-reports/*vuln*.json >/dev/null 2>&1; then
+          for f in khulnasoft-reports/*vuln*.json; do
+            printf "\n%s\n" "The following vulnerabilities were found in $f:"
+            jq '[.vulnerabilities | group_by(.package) | .[] | {package: .[0].package, vuln: [.[].vuln]}]' $f
+          done
+        fi

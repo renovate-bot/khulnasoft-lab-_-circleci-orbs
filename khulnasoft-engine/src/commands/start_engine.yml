@@ -1,0 +1,21 @@
+description: Start & wait for KhulnaSoft Engine
+
+parameters:
+  khulnasoft_version:
+    description: Version of khulnasoft inline-scan image.
+    type: string
+    default: $KHULNASOFT_VERSION
+  timeout:
+    description: Timeout used for KhulnaSoft Engine image scanning.
+    type: string
+    default: '300'
+
+steps:
+  - run:
+      name: Start KhulnaSoft Engine
+      command: |
+        KHULNASOFT_VERSION="<< parameters.khulnasoft_version >>"
+        TIMEOUT=<< parameters.timeout >>
+        docker pull "docker.io/khulnasoft/inline-scan:${KHULNASOFT_VERSION}"
+        docker run -d --name khulnasoft-engine "docker.io/khulnasoft/inline-scan:${KHULNASOFT_VERSION}" start
+        docker exec -e TIMEOUT="$TIMEOUT" -it khulnasoft-engine bash -lc 'khulnasoft_ci_tools.py --wait --timeout "$TIMEOUT"'

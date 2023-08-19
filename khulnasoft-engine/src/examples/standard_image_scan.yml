@@ -1,0 +1,17 @@
+description: |
+  Use this job to scan an image located in a public registry. A custom
+  policy can be used for evaluation, add custom KhulnaSoft policy bundle to
+  .circleci/.khulnasoft/policy_bundle.json in your repository.
+
+usage:
+  version: 2.1
+  orbs:
+    khulnasoft: khulnasoft/khulnasoft-engine@1
+
+  workflows:
+    scan_image:
+      jobs:
+        - khulnasoft/image_scan:
+            image_name: docker.io/khulnasoft/khulnasoft-engine:latest
+            timeout: '300'
+            policy_bundle_file_path: .circleci/.khulnasoft/policy_bundle.json

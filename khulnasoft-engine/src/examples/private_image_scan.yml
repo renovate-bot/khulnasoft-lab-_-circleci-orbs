@@ -1,0 +1,19 @@
+description: |
+  Use this job to scan an image located in a private registry. A custom
+  policy can be used for evaluation, add custom KhulnaSoft policy bundle to
+  .circleci/.khulnasoft/policy_bundle.json in your repository.
+
+usage:
+  version: 2.1
+  orbs:
+    khulnasoft: khulnasoft/khulnasoft-engine@1
+
+  workflows:
+    scan_image:
+      jobs:
+        - khulnasoft/image_scan:
+            image_name: docker.io/khulnasoft/khulnasoft-engine:latest
+            private_registry: True
+            registry_name: docker.io
+            registry_user: $DOCKER_USER
+            registry_pass: $DOCKER_PASS
