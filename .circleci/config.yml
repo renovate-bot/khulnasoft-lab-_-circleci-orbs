@@ -16,7 +16,7 @@ parameters:
     type: boolean
 orbs:
   khulnasoft: khulnasoft/khulnasoft-engine@<<pipeline.parameters.dev-orb-version>>
-  orb-tools: circleci/orb-tools@9.0.0
+  orb-tools: circleci/orb-tools@12.3.0
 
 jobs:
   local_image_scan:
