@@ -1,4 +1,4 @@
-FROM node@sha256:0579ebfe2cd30c3843cd2539b9398a36c9291c4748ef7ccb7dbc9fb3e731d540
+FROM node@sha256:7f4a01d414f932df3360f8fe65cd0461658af9a52b1c066f966dff50a9dec223
 
 RUN mkdir -p /home/node/ && apt-get update && apt-get -y install curl
 COPY ./app/ /home/node/app/
